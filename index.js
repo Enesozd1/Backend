@@ -35,7 +35,7 @@ app.use('/images',express.static('upload/images'))
 app.post("/upload", upload.single('product'),(req,res)=>{
     res.json({
         success:1,
-        image_url:`http://localhost:${port}/images/${req.file.filename}`
+        image_url:`https://eucway.com/images/${req.file.filename}`
     })
 })
 
@@ -201,6 +201,57 @@ app.post('/login',async (req,res)=>{
     }
 })
 
+//endpoint for newcollection
+app.get('/newcollections',async (req,res) => {
+    let products = await Product.find({});
+    let newcollection = products.slice(1).slice(-8);
+    console.log("newcollection fetched");
+    res.send(newcollection);
+})
+
+// creating middleware to fetch user
+const fetchUser = async (req,res,next) => {
+    const token = req.header('auth-token');
+    if(!token){
+        res.status(401).send({errors:"Please authenicate using valid token"})
+    }
+    else{
+        try{
+            const data = jwt.verify(token, 'secret_ecom');
+            req.user = data.user;
+            next();
+        }
+        catch (error){
+            response.status(401).send({errors:"Please authenticate using a valid token"})
+        }
+    }
+}
+
+//endpoint for cartdata
+app.post('/addtocart',fetchUser, async (req,res) =>{
+    console.log("added", req.body.itemId);
+    let userData = await Users.findOne({_id:req.user.id});
+    userData.cartData[req.body.itemId] += 1;
+    await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData});
+    res.send("Added")
+})
+
+//endpoint for remove cartdata
+app.post('/removefromcart',fetchUser, async (req,res)=>{
+    console.log("removed", req.body.itemId);
+    let userData = await Users.findOne({_id:req.user.id});
+    if(userData.cartData[req.body.itemId]>0)
+    userData.cartData[req.body.itemId] -= 1;
+    await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData});
+    res.send("Removed")
+})
+
+//endpoint to retrieve cartdata on login
+app.post('/getcart',fetchUser,async (req,res) =>{
+    let userData = await Users.findOne({_id:req.user.id})
+    res.json(userData.cartData);
+})
+
 app.listen(port,(error)=>{
     if(!error){
         console.log("Server Runnng on Port" + port)
@@ -210,3 +261,5 @@ app.listen(port,(error)=>{
     }
 
 })
+
+//http://localhost:${port}/images/${req.file.filename}
