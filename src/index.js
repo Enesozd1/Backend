@@ -1,3 +1,6 @@
+import {createTransport} from "nodemailer";
+import env from "../env";
+
 const port = 4000;
 const express = require("express");
 const app = express();
@@ -6,6 +9,10 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+const Stripe = require("stripe");
+const stripe = Stripe(process.env.STRIPE_KEY)
+const bodyParser = require('body-parser');
+const sendinblue = require('./api/sendinblue');
 
 app.use(express.json());
 app.use(cors());
@@ -227,6 +234,34 @@ const fetchUser = async (req,res,next) => {
     }
 }
 
+//endpoint for stripe
+app.post('/create-checkout-session', async (req, res) => {
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'T-shirt',
+            },
+            unit_amount: 2000,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: 'http://localhost:4242/success',
+      cancel_url: 'http://localhost:4242/cancel',
+    });
+  
+    res.redirect(303, session.url);
+  });
+
+
+
+
+
+
 //endpoint for cartdata
 app.post('/addtocart',fetchUser, async (req,res) =>{
     console.log("added", req.body.itemId);
@@ -261,5 +296,17 @@ app.listen(port,(error)=>{
     }
 
 })
+
+//endpoint for brevo
+
+app.use(bodyParser.json()).post('/api/email', (req, res) => {
+    const { email = '', msg = '' } = req.body; //We will use this later
+  
+    res.send('success');
+    sendinblue(sendSmtpEmail)
+
+});
+
+
 
 //http://localhost:${port}/images/${req.file.filename}
