@@ -1,5 +1,4 @@
-import {createTransport} from "nodemailer";
-import env from "../env";
+//import env from "../env";
 
 const port = 4000;
 const express = require("express");
@@ -12,7 +11,7 @@ const cors = require("cors");
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_KEY)
 const bodyParser = require('body-parser');
-const sendinblue = require('./api/sendinblue');
+//const sendinblue = require('./api/sendinblue');
 
 app.use(express.json());
 app.use(cors());
@@ -153,6 +152,10 @@ const Users = mongoose.model('Users', {
     date:{
         type:Date,
         default:Date.now,
+    },
+    verified:{
+        type:Boolean,
+        default:false,
     }
     
 })
