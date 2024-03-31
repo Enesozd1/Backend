@@ -306,24 +306,32 @@ app.post('/getcart',fetchUser,async (req,res) =>{
 })
 
 const transporter = nodemailer.createTransport({
-    service: "Gmail", 
+    service: 'gmail',
     auth: {
       user: process.env.USER,
-      pass: process.env.PASS
-    }
+      pass: process.env.PASS,
+    },
   });
-  app.post("/send", (req, res) => {
+  
+  app.post('/send', (req, res) => {
+    const { to } = req.body;
+    const verificationCode = Math.floor(Math.random() * 1000000);
+  
     const mailOptions = {
-      from: req.body.from,
-      to: req.body.to,
-      subject: req.body.subject,
-      html: req.body.message
+      from: process.env.USER,
+      to,
+      subject: 'Email Verification',
+      text: `Your verification code is ${verificationCode}`,
     };
-    transporter.sendMail(mailOptions, (error, info) => {
-       if(error){
-         return res.status(500).send(error);
-       }
-       res.status(200).send("Email sent successfully");
+  
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error sending email' });
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.status(200).json({ message: 'Email sent successfully' });
+      }
     });
   });
 
