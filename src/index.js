@@ -312,7 +312,7 @@ const transporter = nodemailer.createTransport({
       pass: process.env.PASS
     }
   });
-  app.post("/api/send", (req, res) => {
+  app.post("/send", (req, res) => {
     const mailOptions = {
       from: req.body.from,
       to: req.body.to,
