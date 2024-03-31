@@ -9,11 +9,8 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require('cors');
-const corsOptions = {
-    origin: "https://eucway.com",
-    methods: ['GET', 'POST'],
-  };
-  
+
+
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_KEY)
 const bodyParser = require('body-parser');
@@ -22,8 +19,14 @@ const Schema = mongoose.Schema
 const dotenv = require("dotenv")
 dotenv.config()
 
-app.use(express.json());
+const corsOptions = {
+    origin: "https://eucway.com",
+    methods: ['GET', 'POST'],
+  };
+  
 app.use(cors(corsOptions));
+app.use(express.json());
+
 
 
 //Database connection
