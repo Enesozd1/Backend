@@ -8,9 +8,9 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
-const cors = require("cors");
 const corsOptions = {
     origin: "https://eucway.com",
+    methods: ['GET', 'POST'],
   };
   
 const Stripe = require("stripe");
