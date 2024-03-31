@@ -1,5 +1,6 @@
 //import env from "../env";
-
+//const sendemail = require("../sendEmail/sendEmail")
+const nodemailer = require("nodemailer");
 const port = 4000;
 const express = require("express");
 const app = express();
@@ -11,7 +12,11 @@ const cors = require("cors");
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_KEY)
 const bodyParser = require('body-parser');
+const Schema = mongoose.Schema
 //const sendinblue = require('./api/sendinblue');
+const dotenv = require("dotenv")
+
+dotenv.config()
 
 app.use(express.json());
 app.use(cors());
@@ -24,6 +29,8 @@ mongoose.connect("mongodb+srv://eucway:t9O6PmartaYBzJFY@cluster0.rgcx0d6.mongodb
 app.get("/", (req,res)=>{
     res.send("Express App is Running")
 })
+
+
 
 // Image Storage Engine
 
@@ -85,6 +92,9 @@ const Product = mongoose.model("Product",{
         default:true,
     },
 })
+
+
+
 
 app.post('/addproduct', async (req,res)=>{
     let products = await Product.find({});
@@ -168,7 +178,7 @@ app.post('/signup',async (req,res)=>{
         return res.status(400).json({success:false, errors:"existing user found with this email address"})
     }
     let cart = {};
-    for(let i=0; i<300; i++){
+    for(let i=0; i<100; i++){
         cart[i]=0;
     }
     const user = new Users({
@@ -187,6 +197,9 @@ app.post('/signup',async (req,res)=>{
     }
     const token = jwt.sign(data,'secret_ecom');
     res.json({success:true,token})
+
+    const url = `${process.env.BASE_URL}/${user.id}/${token}`;
+    await sendemail(user.email, "Verify Email", url);
 })
 //User login endpoint
 app.post('/login',async (req,res)=>{
@@ -225,6 +238,7 @@ const fetchUser = async (req,res,next) => {
     if(!token){
         res.status(401).send({errors:"Please authenicate using valid token"})
     }
+    
     else{
         try{
             const data = jwt.verify(token, 'secret_ecom');
@@ -235,6 +249,7 @@ const fetchUser = async (req,res,next) => {
             response.status(401).send({errors:"Please authenticate using a valid token"})
         }
     }
+    await Users.updateOne({_id:user.id, verified:true});  //for to be removed
 }
 
 //endpoint for stripe
@@ -290,9 +305,32 @@ app.post('/getcart',fetchUser,async (req,res) =>{
     res.json(userData.cartData);
 })
 
+const transporter = nodemailer.createTransport({
+    service: "Gmail", 
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASS
+    }
+  });
+  app.post("/api/send", (req, res) => {
+    const mailOptions = {
+      from: req.body.from,
+      to: req.body.to,
+      subject: req.body.subject,
+      html: req.body.message
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+       if(error){
+         return res.status(500).send(error);
+       }
+       res.status(200).send("Email sent successfully");
+    });
+  });
+
 app.listen(port,(error)=>{
     if(!error){
         console.log("Server Runnng on Port" + port)
+        
     }
     else{
         console.log("Error: " +error)
