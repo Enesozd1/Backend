@@ -252,31 +252,10 @@ const fetchUser = async (req,res,next) => {
             response.status(401).send({errors:"Please authenticate using a valid token"})
         }
     }
-    await Users.updateOne({_id:user.id, verified:true});  //for to be removed
+   
 }
 
 //endpoint for stripe
-app.post('/create-checkout-session', async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: 'T-shirt',
-            },
-            unit_amount: 2000,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      success_url: 'http://localhost:4242/success',
-      cancel_url: 'http://localhost:4242/cancel',
-    });
-  
-    res.redirect(303, session.url);
-  });
 
 
 
@@ -322,13 +301,6 @@ app.listen(port,(error)=>{
 
 //endpoint for brevo
 
-app.use(bodyParser.json()).post('/api/email', (req, res) => {
-    const { email = '', msg = '' } = req.body; //We will use this later
-  
-    res.send('success');
-    sendinblue(sendSmtpEmail)
-
-});
 
 
 
