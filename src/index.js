@@ -1,7 +1,7 @@
 //import env from "../env";
 //const sendemail = require("../sendEmail/sendEmail")
-const nodemailer = require("nodemailer");
-const port = process.env.port;
+//const nodemailer = require("nodemailer");
+//const port = process.env.port;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -27,7 +27,7 @@ app.use(express.json());
 
 
 //Database connection
-mongoose.connect(process.env.Mongoose);
+mongoose.connect(`${process.env.Mongoose}`);
 
 // create API
 app.get("/", (req,res)=>{
@@ -288,9 +288,9 @@ app.post('/getcart',fetchUser,async (req,res) =>{
 })
 
 
-app.listen(port,(error)=>{
+app.listen(process.env.port,(error)=>{
     if(!error){
-        console.log("Server Runnng on Port" + port)
+        console.log("Server Runnng on Port" + process.env.port)
         
     }
     else{
