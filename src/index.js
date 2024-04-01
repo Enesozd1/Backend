@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
-
+let cors = require("cors");
 
 
 const Stripe = require("stripe");
@@ -18,6 +18,7 @@ const Schema = mongoose.Schema
 const dotenv = require("dotenv")
 dotenv.config()
 
+app.use(cors());
 
 app.use(express.json());
 
