@@ -19,7 +19,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 
 app.use(cors({
-    origin: "https://eucway.com/",
+    origin: "https://eucway.com",
 }))
 app.use(express.json());
 
