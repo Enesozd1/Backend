@@ -18,7 +18,9 @@ const Schema = mongoose.Schema
 const dotenv = require("dotenv")
 dotenv.config()
 
-app.use(cors());
+app.use(cors({
+    origin:"https://eucway.com",
+}));
 
 app.use(express.json());
 
