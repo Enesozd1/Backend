@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
-const cors = require('cors');
+
 
 
 const Stripe = require("stripe");
@@ -18,13 +18,7 @@ const Schema = mongoose.Schema
 const dotenv = require("dotenv")
 dotenv.config()
 
-app.use(cors({
-    origin: "https://eucway.com",
-}))
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://eucway.com');
-    next();
-  });
+
 app.use(express.json());
 
 
