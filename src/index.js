@@ -1,7 +1,5 @@
-//import env from "../env";
-//const sendemail = require("../sendEmail/sendEmail")
 const nodemailer = require("nodemailer");
-const port = 4000;
+const port = process.env.port;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -27,7 +25,7 @@ app.use(express.json());
 
 
 //Database connection
-mongoose.connect("mongodb+srv://eucway:t9O6PmartaYBzJFY@cluster0.rgcx0d6.mongodb.net/e-commerce");
+mongoose.connect(process.env.Mongoose);
 
 // create API
 app.get("/", (req,res)=>{
@@ -39,7 +37,7 @@ app.get("/", (req,res)=>{
 // Image Storage Engine
 
 const storage = multer.diskStorage({
-    destination:'./upload/images',
+    destination:Imgdestination,
     filename:(req,file,cb)=>{
         return cb(null,`${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
     }
