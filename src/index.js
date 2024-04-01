@@ -21,6 +21,10 @@ dotenv.config()
 app.use(cors({
     origin: "https://eucway.com",
 }))
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://eucway.com');
+    next();
+  });
 app.use(express.json());
 
 
