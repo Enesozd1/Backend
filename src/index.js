@@ -1,7 +1,7 @@
 //import env from "../env";
 //const sendemail = require("../sendEmail/sendEmail")
 //const nodemailer = require("nodemailer");
-//const port = process.env.port;
+const port = 4000;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -288,9 +288,9 @@ app.post('/getcart',fetchUser,async (req,res) =>{
 })
 
 
-app.listen(process.env.port,(error)=>{
+app.listen(port,(error)=>{
     if(!error){
-        console.log("Server Runnng on Port" + process.env.port)
+        console.log("Server Runnng on Port" + port)
         
     }
     else{
