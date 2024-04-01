@@ -19,12 +19,10 @@ const Schema = mongoose.Schema
 const dotenv = require("dotenv")
 dotenv.config()
 
-const corsOptions = {
-    origin: "https://eucway.com",
-    methods: ['GET', 'POST'],
-  };
-  
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+  });
 app.use(express.json());
 
 
