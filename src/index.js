@@ -27,7 +27,7 @@ app.use(express.json());
 
 
 //Database connection
-mongoose.connect(`${process.env.Mongoose}`);
+mongoose.connect("mongodb+srv://eucway:t9O6PmartaYBzJFY@cluster0.rgcx0d6.mongodb.net/e-commerce");
 
 // create API
 app.get("/", (req,res)=>{
@@ -39,7 +39,7 @@ app.get("/", (req,res)=>{
 // Image Storage Engine
 
 const storage = multer.diskStorage({
-    destination:process.env.Imgdestination,
+    destination:'./upload/images',
     filename:(req,file,cb)=>{
         return cb(null,`${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
     }
