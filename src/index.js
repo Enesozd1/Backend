@@ -15,14 +15,12 @@ const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_KEY)
 const bodyParser = require('body-parser');
 const Schema = mongoose.Schema
-//const sendinblue = require('./api/sendinblue');
 const dotenv = require("dotenv")
 dotenv.config()
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-  });
+app.use(cors({
+    origin: "https://eucway.com/",
+}))
 app.use(express.json());
 
 
