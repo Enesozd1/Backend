@@ -205,8 +205,7 @@ app.post('/signup',async (req,res)=>{
     const token = jwt.sign(data,'secret_ecom');
     res.json({success:true,token})
 
-    const url = `${process.env.BASE_URL}/${user.id}/${token}`;
-    await sendemail(user.email, "Verify Email", url);
+    
 })
 //User login endpoint
 app.post('/login',async (req,res)=>{
