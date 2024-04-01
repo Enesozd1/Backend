@@ -1,3 +1,5 @@
+//import env from "../env";
+//const sendemail = require("../sendEmail/sendEmail")
 const nodemailer = require("nodemailer");
 const port = process.env.port;
 const express = require("express");
