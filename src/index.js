@@ -20,7 +20,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 
 const corsOptions = {
-    origin: "http://localhost:3000/",
+    origin: "https://eucway.com",
     methods: ['GET', 'POST'],
   };
   
