@@ -31,7 +31,7 @@ mongoose.connect("mongodb+srv://eucway:t9O6PmartaYBzJFY@cluster0.rgcx0d6.mongodb
 
 // create API
 app.get("/", (req,res)=>{
-    res.send("Express App is Running")
+    return res.send("Express App is Running")
 })
 
 
@@ -270,7 +270,7 @@ app.get('/newcollections',async (req,res) => {
 const fetchUser = async (req,res,next) => {
     const token = req.header('auth-token');
     if(!token){
-        res.status(401).send({errors:"Please authenicate using valid token"})
+        return res.status(401).send({errors:"Please authenicate using valid token"})
     }
     
     else{
@@ -280,7 +280,7 @@ const fetchUser = async (req,res,next) => {
             next();
         }
         catch (error){
-            response.status(401).send({errors:"Please authenticate using a valid token"})
+            return response.status(401).send({errors:"Please authenticate using a valid token"})
         }
     }
    
@@ -299,7 +299,7 @@ app.post('/addtocart',fetchUser, async (req,res) =>{
     let userData = await Users.findOne({_id:req.user.id});
     userData.cartData[req.body.itemId] += 1;
     await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData});
-    res.send("Added")
+    return res.send("Added")
 })
 
 //endpoint for remove cartdata
@@ -309,13 +309,13 @@ app.post('/removefromcart',fetchUser, async (req,res)=>{
     if(userData.cartData[req.body.itemId]>0)
     userData.cartData[req.body.itemId] -= 1;
     await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData});
-    res.send("Removed")
+    return res.send("Removed")
 })
 
 //endpoint to retrieve cartdata on login
 app.post('/getcart',fetchUser,async (req,res) =>{
     let userData = await Users.findOne({_id:req.user.id})
-    res.json(userData.cartData);
+    return res.json(userData.cartData);
 })
 
 
