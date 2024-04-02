@@ -31,7 +31,7 @@ mongoose.connect("mongodb+srv://eucway:t9O6PmartaYBzJFY@cluster0.rgcx0d6.mongodb
 
 // create API
 app.get("/", (req,res)=>{
-    return res.send("Express App is Running")
+    res.send("Express App is Running")
 })
 
 
@@ -77,14 +77,14 @@ app.post('/log-value', (req, res) => {
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
-        if(!error){
-            return res.status(200).send("Email sent successfully");
+        if(error){
+          return res.status(500).send(error);
         }
-        
+        res.status(200).send("Email sent successfully");
      });
    
     console.log('Received value:', req.body.to);
-   
+    res.status(200).json({ message: 'Value logged successfully'  });
   });
 
 //Schema for products
@@ -270,7 +270,7 @@ app.get('/newcollections',async (req,res) => {
 const fetchUser = async (req,res,next) => {
     const token = req.header('auth-token');
     if(!token){
-        return res.status(401).send({errors:"Please authenicate using valid token"})
+        res.status(401).send({errors:"Please authenicate using valid token"})
     }
     
     else{
@@ -280,7 +280,7 @@ const fetchUser = async (req,res,next) => {
             next();
         }
         catch (error){
-            return response.status(401).send({errors:"Please authenticate using a valid token"})
+            response.status(401).send({errors:"Please authenticate using a valid token"})
         }
     }
    
@@ -299,7 +299,7 @@ app.post('/addtocart',fetchUser, async (req,res) =>{
     let userData = await Users.findOne({_id:req.user.id});
     userData.cartData[req.body.itemId] += 1;
     await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData});
-    return res.send("Added")
+    res.send("Added")
 })
 
 //endpoint for remove cartdata
@@ -309,13 +309,13 @@ app.post('/removefromcart',fetchUser, async (req,res)=>{
     if(userData.cartData[req.body.itemId]>0)
     userData.cartData[req.body.itemId] -= 1;
     await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData});
-    return res.send("Removed")
+    res.send("Removed")
 })
 
 //endpoint to retrieve cartdata on login
 app.post('/getcart',fetchUser,async (req,res) =>{
     let userData = await Users.findOne({_id:req.user.id})
-    return res.json(userData.cartData);
+    res.json(userData.cartData);
 })
 
 
