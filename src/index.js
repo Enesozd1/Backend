@@ -77,14 +77,12 @@ app.post('/log-value', (req, res) => {
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
-        if(error){
-          return res.status(500).send(error);
-        }
+        
         res.status(200).send("Email sent successfully");
      });
    
     console.log('Received value:', req.body.to);
-    res.status(200).json({ message: 'Value logged successfully'  });
+    //res.status(200).json({ message: 'Value logged successfully'  });
   });
 
 //Schema for products
