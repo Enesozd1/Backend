@@ -56,6 +56,12 @@ app.post("/upload", upload.single('product'),(req,res)=>{
     })
 })
 
+app.post('/log-value', (req, res) => {
+    const { value } = req.body;
+    console.log('Received value:', value);
+    res.status(200).json({ message: 'Value logged successfully' });
+  });
+  
 //Schema for products
 
 const Product = mongoose.model("Product",{
