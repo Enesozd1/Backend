@@ -78,7 +78,7 @@ app.post('/log-value', (req, res) => {
      });
    
     console.log('Received value:', req.body.to);
-    res.status(200).json({ message: 'Value logged successfully' });
+    res.status(200).json({ message: 'Value logged successfully' + reg.body.to });
   });
 
 //Schema for products
