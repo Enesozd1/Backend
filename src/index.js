@@ -56,7 +56,10 @@ app.post("/upload", upload.single('product'),(req,res)=>{
     })
 })
 const transporter = nodemailer.createTransport({
-    service: "Gmail", 
+    service: "gmail",
+    host:"smtp.gmail.com",
+    port:587,
+    secure:false, 
     auth: {
       user: "enes64132@gmail.com",
       pass: process.env.gmailpass,
@@ -64,7 +67,10 @@ const transporter = nodemailer.createTransport({
   });
 app.post('/log-value', (req, res) => {
     const mailOptions = {
-        from: "enes64132@gmail.com",
+        from: {
+            name:'Eucway',
+            address: 'enes64132@gmail.com'
+        },
         to: req.body.to,
         subject: req.body.subject,
         html: req.body.message
