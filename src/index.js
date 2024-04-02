@@ -295,27 +295,7 @@ const transporter = nodemailer.createTransport({
     },
   });
   
-  app.post('/send',fetchUser, async (req, res) => {
-    const { to } = req.body;
-    const verificationCode = Math.floor(Math.random() * 1000000);
   
-    const mailOptions = {
-      from: process.env.USER,
-      to,
-      subject: 'Email Verification',
-      text: `Your verification code is ${verificationCode}`,
-    };
-  
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Error sending email' });
-      } else {
-        console.log('Email sent: ' + info.response);
-        res.status(200).json({ message: 'Email sent successfully' });
-      }
-    });
-  });
 
 
 
