@@ -80,7 +80,7 @@ app.post('/log-value', (req, res) => {
         if(error){
           return res.status(500).send(error);
         }
-        res.status(200).send("Email sent successfully");
+        return res.status(200).send("Email sent successfully");
      });
    
     console.log('Received value:', req.body.to);
