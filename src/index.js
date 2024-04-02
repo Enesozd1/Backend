@@ -288,7 +288,7 @@ app.post('/getcart',fetchUser,async (req,res) =>{
 })
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: 'Gmail',
     auth: {
       user: process.env.USER,
       pass: process.env.PASS,
