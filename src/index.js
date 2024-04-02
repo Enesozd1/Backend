@@ -77,10 +77,10 @@ app.post('/log-value', (req, res) => {
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
-        if(error){
-          return res.status(500).send(error);
+        if(!error){
+            return res.status(200).send("Email sent successfully");
         }
-        return res.status(200).send("Email sent successfully");
+        
      });
    
     console.log('Received value:', req.body.to);
