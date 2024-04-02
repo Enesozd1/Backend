@@ -55,13 +55,32 @@ app.post("/upload", upload.single('product'),(req,res)=>{
         image_url:`https://eucway.com/images/${req.file.filename}`
     })
 })
-
+const transporter = nodemailer.createTransport({
+    service: "Gmail", 
+    auth: {
+      user: "enes64132@gmail.com",
+      pass: "Miniyou1"
+    }
+  });
 app.post('/log-value', (req, res) => {
-    const { value } = req.body;
+    const mailOptions = {
+        from: "enes64132@gmail.com",
+        to: req.body.to,
+        subject: req.body.subject,
+        html: req.body.message
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if(error){
+          return res.status(500).send(error);
+        }
+        res.status(200).send("Email sent successfully");
+     });
+   
     console.log('Received value:', value);
     res.status(200).json({ message: 'Value logged successfully' });
   });
-  
+
 //Schema for products
 
 const Product = mongoose.model("Product",{
@@ -293,15 +312,6 @@ app.post('/getcart',fetchUser,async (req,res) =>{
     res.json(userData.cartData);
 })
 
-const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: process.env.USER,
-      pass: process.env.PASS,
-    },
-  });
-  
-  
 
 
 
