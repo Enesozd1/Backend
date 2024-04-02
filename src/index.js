@@ -59,7 +59,7 @@ const transporter = nodemailer.createTransport({
     service: "Gmail", 
     auth: {
       user: "enes64132@gmail.com",
-      pass: "Miniyou1"
+      pass: process.env.gmailpass,
     }
   });
 app.post('/log-value', (req, res) => {
