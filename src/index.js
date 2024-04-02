@@ -295,7 +295,7 @@ const transporter = nodemailer.createTransport({
     },
   });
   
-  app.post('/send', async (req, res) => {
+  app.post('/send',fetchUser, async (req, res) => {
     const { to } = req.body;
     const verificationCode = Math.floor(Math.random() * 1000000);
   
