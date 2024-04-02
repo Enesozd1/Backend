@@ -77,7 +77,7 @@ app.post('/log-value', (req, res) => {
         res.status(200).send("Email sent successfully");
      });
    
-    console.log('Received value:', value);
+    console.log('Received value:', req.body.to);
     res.status(200).json({ message: 'Value logged successfully' });
   });
 
