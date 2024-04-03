@@ -58,8 +58,8 @@ app.post("/upload", upload.single('product'),(req,res)=>{
 const transporter = nodemailer.createTransport({
     service: "gmail",
     host:"smtp.gmail.com",
-    port:587,
-    secure:false, 
+    port:465,
+    secure:true, 
     auth: {
       user: "enes64132@gmail.com",
       pass: "qywniqtcbdzarisq",
