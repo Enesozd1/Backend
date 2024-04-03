@@ -73,6 +73,7 @@ app.post('/log-value', (req, res) => {
         },
         to: req.body.to,
         subject: req.body.subject,
+        text:req.body.text,
         html: req.body.message
       };
 
