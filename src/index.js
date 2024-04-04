@@ -209,6 +209,9 @@ app.post('/signupCheck',async (req,res)=>{
     if(check){
         return res.status(400).json({success:false, errors:"existing user found with this email address"})
     }
+    else{
+        return res.status(200).json({success:true})
+    }
 })
 
 //Endpoint for user registration
