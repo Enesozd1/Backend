@@ -24,7 +24,7 @@ app.use(cors({
 
 app.use(express.json());
 
-console.log(process.env.BASE_URL)
+
 
 //Database connection
 mongoose.connect("mongodb+srv://eucway:t9O6PmartaYBzJFY@cluster0.rgcx0d6.mongodb.net/e-commerce");
@@ -37,7 +37,7 @@ app.get("/", (req,res)=>{
 
 
 // Image Storage Engine
-
+console.log(process.env.BASE_URL)
 const storage = multer.diskStorage({
     destination:'./upload/images',
     filename:(req,file,cb)=>{
