@@ -19,12 +19,12 @@ const dotenv = require("dotenv")
 dotenv.config()
 
 app.use(cors({
-    origin: '*',
+    origin: 'https://eucway.com',  // it was '*'
 }));
 
 app.use(express.json());
 
-
+console.log(process.env.BASE_URL)
 
 //Database connection
 mongoose.connect("mongodb+srv://eucway:t9O6PmartaYBzJFY@cluster0.rgcx0d6.mongodb.net/e-commerce");
