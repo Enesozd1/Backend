@@ -19,7 +19,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 
 app.use(cors({
-    origin: 'https://eucway.com',  // it was '*'
+    origin: '*',  // it was '*'
 }));
 
 app.use(express.json());
@@ -37,7 +37,7 @@ app.get("/", (req,res)=>{
 
 
 // Image Storage Engine
-console.log(process.env.BASE_URL)
+
 const storage = multer.diskStorage({
     destination:'./upload/images',
     filename:(req,file,cb)=>{
