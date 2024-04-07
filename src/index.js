@@ -197,7 +197,7 @@ const Users = mongoose.model('Users', {
         type:Date,
         default:Date.now,
     },
-    verified:{
+    LoggedIn:{
         type:Boolean,
         default:false,
     }
@@ -230,6 +230,7 @@ app.post('/signup',async (req,res)=>{
         email:req.body.email,
         password:req.body.password,
         cartData:cart,
+        
     })
 
     await user.save();
@@ -256,6 +257,7 @@ app.post('/login',async (req,res)=>{
                 }
             }
             const token = jwt.sign(data,'secret_ecom');
+            user.LoggedIn == true;
             res.json({success:true,token});
         }
         else{
