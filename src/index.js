@@ -230,6 +230,7 @@ app.post('/signup',async (req,res)=>{
         email:req.body.email,
         password:req.body.password,
         cartData:cart,
+        LoggedIn:!check,
         
     })
 
@@ -242,6 +243,7 @@ app.post('/signup',async (req,res)=>{
     }
     const token = jwt.sign(data,'secret_ecom');
     res.json({success:true,token})
+    
 
     
 })
