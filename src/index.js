@@ -276,11 +276,11 @@ app.post('/login',async (req,res)=>{
             res.json({success:true,token});
         }
         else{
-            res.json({success:false, errors:"Wrong Password or email"}) //wrong password
+            res.json({success:false, errors:user}) //wrong password
         }
     }
     else{
-        res.json({success:false,errors:"Wrong Password or email"}); //wrong email
+        res.json({success:false,errors:error}); //wrong email
     }
 })
 
