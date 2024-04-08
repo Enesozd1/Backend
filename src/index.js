@@ -256,6 +256,7 @@ app.post('/logout', async (req,res)=>{
     if(user){
         user.LoggedIn = false
     }
+    res.send("Logged Out")
 })
 
 //User login endpoint
