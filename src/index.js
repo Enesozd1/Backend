@@ -99,7 +99,7 @@ const Product = mongoose.model("Product",{
     },
     image:{
         type:String,
-        required:true,
+        required:false,
     },
     category:{
         type:String,
@@ -125,6 +125,10 @@ const Product = mongoose.model("Product",{
         type:Boolean,
         default:true,
     },
+    stringimage:{
+        type:String,
+        required:true,
+    }
 })
 
 
@@ -247,9 +251,17 @@ app.post('/signup',async (req,res)=>{
 
     
 })
+app.post('/logout', async (req,res)=>{
+    let user = await Users.findOne({email:req.body.email});
+    if(user){
+        user.LoggedIn = false
+    }
+})
+
 //User login endpoint
 app.post('/login',async (req,res)=>{
     let user = await Users.findOne({email:req.body.email});
+    
     if(user){
         const passCompare = req.body.password === user.password;
         if(passCompare){
@@ -259,7 +271,7 @@ app.post('/login',async (req,res)=>{
                 }
             }
             const token = jwt.sign(data,'secret_ecom');
-            user.LoggedIn == true;
+            user.LoggedIn = true;
             res.json({success:true,token});
         }
         else{
