@@ -19,7 +19,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 
 app.use(cors({
-    origin: '*',  // it was '*'
+    origin: ['https://eucway.com', 'http://localhost:5173','http://localhost:3000'],  // it was '*'
 }));
 
 app.use(express.json());
