@@ -51,9 +51,10 @@ app.use('/images',express.static('upload/images'))
 
 app.post("/upload", upload.single('product'),(req,res)=>{
     const loginUrl = `${process.env.BASE_URL}/images/${req.file.filename}`;
+    const LoginUrl = req.body;
     res.json({
         success:1,
-        image_url:loginUrl
+        image_url:LoginUrl
     })
 })
 const transporter = nodemailer.createTransport({
@@ -70,7 +71,7 @@ app.post('/log-value', (req, res) => {
     const mailOptions = {
         from: {
             name:'Eucway',
-            address: 'enes64132@gmail.com'
+            address: process.env.USER
         },
         to: req.body.to,
         subject: req.body.subject,
