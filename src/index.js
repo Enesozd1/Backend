@@ -50,19 +50,20 @@ const upload = multer({storage:storage})
 app.use('/images',express.static('upload/images'))
 
 app.post("/upload", upload.single('product'),(req,res)=>{
+    const loginUrl = `${process.env.BASE_URL}/images/${req.file.filename}`;
     res.json({
         success:1,
-        image_url:`https://eucway.com/images/${req.file.filename}`
+        image_url:loginUrl
     })
 })
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: process.env.SERVICE,
     host:"smtp.gmail.com",
-    port:587,
+    port:process.env.EMAIL_PORT,
     secure:false, 
     auth: {
-      user: "enes64132@gmail.com",
-      pass: "qywniqtcbdzarisq",
+      user: process.env.USER,
+      pass: process.env.gmailpass,
     }
   });
 app.post('/log-value', (req, res) => {
