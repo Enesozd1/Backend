@@ -27,7 +27,7 @@ app.use(express.json());
 
 
 //Database connection
-mongoose.connect("mongodb+srv://eucway:t9O6PmartaYBzJFY@cluster0.rgcx0d6.mongodb.net/e-commerce");
+mongoose.connect(process.env.Mongoose);
 
 // create API
 app.get("/", (req,res)=>{
@@ -84,6 +84,29 @@ app.post('/log-value', (req, res) => {
    
     console.log('Received value:', req.body.to);
     //res.status(200).json({ message: 'Value logged successfully'  });
+  });
+
+  //Stripe endpoint
+  app.post('/create-checkout-session', async (req, res) => {
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'T-shirt',
+            },
+            unit_amount: 2000,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: 'http://localhost:4242/success',
+      cancel_url: 'http://localhost:4242/cancel',
+    });
+  
+    res.redirect(303, session.url);
   });
 
 //Schema for products
@@ -276,11 +299,11 @@ app.post('/login',async (req,res)=>{
             res.json({success:true,token});
         }
         else{
-            res.json({success:false, errors:user}) //wrong password
+            res.json({success:false, errors:"Wrong Password or Email"}) //wrong password
         }
     }
     else{
-        res.json({success:false,errors:error}); //wrong email
+        res.json({success:false,errors: "Wrong Password or Email"}); //wrong email
     }
 })
 
