@@ -75,7 +75,6 @@ app.post('/log-value', (req, res) => {
         to: req.body.to,
         subject: req.body.subject,
         text:req.body.text,
-        
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
@@ -103,15 +102,13 @@ app.post('/log-value', (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:4242/success',
-      cancel_url: 'http://localhost:4242/cancel',
+      success_url: `${process.env.BASE_URL}/payment`,
+      cancel_url: `${process.env.BASE_URL}/cart`,
     });
-  
-    res.redirect(303, session.url);
+    res.send({url:session.url});
   });
 
 //Schema for products
-
 const Product = mongoose.model("Product",{
     id:{
         type:Number,
@@ -154,8 +151,6 @@ const Product = mongoose.model("Product",{
         required:true,
     }
 })
-
-
 
 
 app.post('/addproduct', async (req,res)=>{
@@ -229,7 +224,6 @@ const Users = mongoose.model('Users', {
         type:Boolean,
         default:false,
     }
-    
 })
 app.post('/signupCheck',async (req,res)=>{
 
@@ -258,8 +252,7 @@ app.post('/signup',async (req,res)=>{
         email:req.body.email,
         password:req.body.password,
         cartData:cart,
-        LoggedIn:!check,
-        
+        LoggedIn:!check,  
     })
 
     await user.save();
@@ -337,11 +330,6 @@ const fetchUser = async (req,res,next) => {
 }
 
 //endpoint for stripe
-
-
-
-
-
 
 //endpoint for cartdata
 app.post('/addtocart',fetchUser, async (req,res) =>{
