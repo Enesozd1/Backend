@@ -102,7 +102,7 @@ app.post('/log-value', (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.BASE_URL}/payment`,
+      success_url: "http://localhost:3000/payment",
       cancel_url: `${process.env.BASE_URL}/cart`,
     });
     res.send({url:session.url});
