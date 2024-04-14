@@ -58,20 +58,24 @@ app.post("/upload", upload.single('product'),(req,res)=>{
 })
 
 //Stripe endpoint
+
 app.post('/create-checkout-session', async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
+    const line_items = req.body.productWithQuantity.map((item) =>{
+        return{
             price_data: {
-              currency: 'usd',
-              product_data: {
-                name: 'T-shirt',
+                currency: 'usd',
+                product_data: {
+                  name: item.name,
+                  images: [item.image],
+                  description: item.description,
+                },
+                unit_amount: item.new_price * 100,
               },
-              unit_amount: 2000,
-            },
-            quantity: 1,
-          },
-        ],
+              quantity: item.quantity,
+        }
+    })
+    const session = await stripe.checkout.sessions.create({
+        line_items,
         mode: 'payment',
         success_url: "http://localhost:3000/payment",
         cancel_url: `${process.env.BASE_URL}/cart`,
