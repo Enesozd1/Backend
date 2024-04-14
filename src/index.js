@@ -11,7 +11,7 @@ const path = require("path");
 let cors = require("cors");
 
 const Stripe = require('stripe');
-const stripe = Stripe("pk_test_51OyzgQLeArpWDJqlL3VhfvJTtvaScBdHGDNyOD5PCzhSuKr4yOSqQGBEWjqFZWa4Jrk0d0ma2DiWFtQlHV7mMrsd002dOOR8n6");
+const stripe = Stripe(process.env.STRIPE_KEY);
 
 const bodyParser = require('body-parser');
 const Schema = mongoose.Schema
