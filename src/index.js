@@ -60,7 +60,7 @@ app.post("/upload", upload.single('product'),(req,res)=>{
 //Stripe endpoint
 
 app.post('/create-checkout-session', async (req, res) => {
-    const line_items = req.body.productWithQuantity.map((item) =>{
+    const line_items = req.body.productWithQuantity.map(item =>{
         return{
             price_data: {
                 currency: 'usd',
