@@ -10,9 +10,9 @@ const multer = require("multer");
 const path = require("path");
 let cors = require("cors");
 
+const Stripe = require('stripe');
+const stripe = Stripe(process.env.STRIPE_KEY);
 
-const Stripe = require("stripe");
-const stripe = Stripe(process.env.STRIPE_KEY)
 const bodyParser = require('body-parser');
 const Schema = mongoose.Schema
 const dotenv = require("dotenv")
@@ -56,6 +56,29 @@ app.post("/upload", upload.single('product'),(req,res)=>{
         image_url:loginUrl
     })
 })
+
+//Stripe endpoint
+app.post('/create-checkout-session', async (req, res) => {
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'T-shirt',
+            },
+            unit_amount: 2000,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: "http://localhost:3000/payment",
+      cancel_url: `${process.env.BASE_URL}/cart`,
+    });
+    res.send({url:session.url});
+  });
+  
 const transporter = nodemailer.createTransport({
     service: process.env.SERVICE,
     host:"smtp.gmail.com",
@@ -86,27 +109,6 @@ app.post('/log-value', (req, res) => {
     //res.status(200).json({ message: 'Value logged successfully'  });
   });
 
-  //Stripe endpoint
-  app.post('/create-checkout-session', async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: 'T-shirt',
-            },
-            unit_amount: 2000,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      success_url: "http://localhost:3000/payment",
-      cancel_url: `${process.env.BASE_URL}/cart`,
-    });
-    res.send({url:session.url});
-  });
 
 //Schema for products
 const Product = mongoose.model("Product",{
