@@ -63,7 +63,7 @@ app.post('/create-checkout-session', async (req, res) => {
     const line_items = req.body.productWithQuantityArray.map(item =>{
         return{
             price_data: {
-                currency: 'usd',
+                currency: 'eur',
                 product_data: {
                   name: item.name,
                   images: [item.image],
@@ -79,7 +79,7 @@ app.post('/create-checkout-session', async (req, res) => {
     shipping_address_collection: {
       allowed_countries: ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE",
       "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT",
-      "RO", "SK", "SI", "ES", "SE", "GB", "IS", "NO", "LI", "CH"],
+      "RO", "SK", "SI", "ES", "SE", "GB", "IS", "NO", "LI", "CH", "US", "CA"],
     },
     shipping_options: [
       {
@@ -87,7 +87,7 @@ app.post('/create-checkout-session', async (req, res) => {
           type: "fixed_amount",
           fixed_amount: {
             amount: 0,
-            currency: "usd",
+            currency: "eur",
           },
           display_name: "Free shipping",
           // Delivers between 5-7 business days
@@ -108,7 +108,7 @@ app.post('/create-checkout-session', async (req, res) => {
           type: "fixed_amount",
           fixed_amount: {
             amount: 1500,
-            currency: "usd",
+            currency: "eur",
           },
           display_name: "Next day air",
           // Delivers in exactly 1 business day
@@ -121,7 +121,7 @@ app.post('/create-checkout-session', async (req, res) => {
               unit: "business_day",
               value: 1,
             },
-          },
+          },    
         },
       },
     ],
