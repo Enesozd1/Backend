@@ -307,7 +307,7 @@ const Users = mongoose.model('Users', {
 })
 app.post('/signupCheck',async (req,res)=>{
 
-    let check = await Users.findOne({email:req.body.email});
+    let check = await Users.findOne({email:req.body});
     if(check){
         return res.status(400).json({success:false, errors:"existing user found with this email address"})
     }
