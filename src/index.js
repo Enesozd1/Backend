@@ -316,7 +316,7 @@ app.post('/signupCheck',async (req,res)=>{
     }
 })
 app.post('/findcontact', async (req,res)=>{
-    let check = await Users.findOne({email:req.body.email});
+    let check = await Users.findOne({email:req.body});
     if(check){
         return res.status(200).json({success:true, errors:"Email Found"})
     }
