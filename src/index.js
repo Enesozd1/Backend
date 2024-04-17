@@ -15,7 +15,8 @@ const stripe = Stripe(process.env.STRIPE_KEY);
 
 const bodyParser = require('body-parser');
 const Schema = mongoose.Schema
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
+const { error } = require("console");
 dotenv.config()
 
 app.use(cors({
@@ -316,12 +317,13 @@ app.post('/signupCheck',async (req,res)=>{
     }
 })
 app.post('/findcontact', async (req,res)=>{
-    let check = await Users.findOne({ email: req.body.email });
-    if(check){
-        return res.status(200).json({success:true, errors:"Email Found"})
+    let user = await Users.findOne({email:req.body.email});
+
+    if(user){
+        return res.status(200).json({success:true})
     }
     else{
-        return res.status(400).json({success:false})
+        return res.status(400).json({success:false, errors:user})
     }
 
 })
