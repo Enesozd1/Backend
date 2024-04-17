@@ -167,6 +167,26 @@ app.post('/log-value', (req, res) => {
     //res.status(200).json({ message: 'Value logged successfully'  });
   });
 
+  app.post('/usercontact', (req, res) => {
+    const mailOptions = {
+        from: {
+            name:'Eucway',
+            address: process.env.USER
+        },
+        to: req.body.to,
+        subject: req.body.subject,
+        text:req.body.text,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        
+        res.status(200).send("Email");
+     });
+   
+    console.log('Received value:', req.body.to);
+    //res.status(200).json({ message: 'Value logged successfully'  });
+  });
+
 
 //Schema for products
 const Product = mongoose.model("Product",{
@@ -294,6 +314,16 @@ app.post('/signupCheck',async (req,res)=>{
     else{
         return res.status(200).json({success:true})
     }
+})
+app.post('/findcontact', async (req,res)=>{
+    let check = await Users.findOne({email:req.body.email});
+    if(check){
+        return res.status(200).json({success:true, errors:"Email Found"})
+    }
+    else{
+        return res.status(400).json({success:false})
+    }
+
 })
 
 //Endpoint for user registration
