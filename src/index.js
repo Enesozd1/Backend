@@ -181,7 +181,7 @@ app.post('/log-value', (req, res) => {
 
       transporter.sendMail(mailOptions, (error, info) => {
         
-        res.status(200).send("Email");
+        //res.status(200).send("Email");
      });
    
     console.log('Received value:', req.body.to);
@@ -306,6 +306,7 @@ const Users = mongoose.model('Users', {
         default:false,
     }
 })
+
 app.post('/signupCheck',async (req,res)=>{
 
     let check = await Users.findOne({email:req.body.email});
@@ -316,6 +317,7 @@ app.post('/signupCheck',async (req,res)=>{
         return res.status(200).json({success:true})
     }
 })
+
 app.post('/findcontact', async (req,res)=>{
     let user = await Users.findOne({email:req.body.email});
 
@@ -325,7 +327,6 @@ app.post('/findcontact', async (req,res)=>{
     else{
         return res.status(400).json({success:false})
     }
-
 })
 
 //Endpoint for user registration
