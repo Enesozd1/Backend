@@ -330,7 +330,7 @@ app.post('/findcontact', async (req,res)=>{
 
             // if less than 24 hours have passed
             if (timeElapsed < 24 * 60 * 60 * 1000) {
-              return res.status(400).send('You can only submit one form every 24 hours.');
+                return res.status(400).json({success:false})
             }
           }
           user.lastSubmission = new Date();
