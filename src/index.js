@@ -317,13 +317,13 @@ app.post('/signupCheck',async (req,res)=>{
     }
 })
 app.post('/findcontact', async (req,res)=>{
-    let user = await Users.findOne({email:req.body});
+    let user = await Users.findOne({email:req.body.email});
 
     if(user){
         return res.status(200).json({success:true})
     }
     else{
-        return res.status(400).json({success:req.body, errors:user})
+        return res.status(400).json({success:req.body.email, errors:user})
     }
 
 })
