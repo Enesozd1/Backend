@@ -304,6 +304,9 @@ const Users = mongoose.model('Users', {
     LoggedIn:{
         type:Boolean,
         default:false,
+    },
+    lastSubmission: {
+        type: Date
     }
 })
 
@@ -322,7 +325,17 @@ app.post('/findcontact', async (req,res)=>{
     let user = await Users.findOne({email:req.body.email});
 
     if(user){
-        return res.status(200).json({success:true})
+        if (user.lastSubmission) {
+            const timeElapsed = new Date().getTime() - user.lastSubmission.getTime();
+
+            // if less than 24 hours have passed
+            if (timeElapsed < 24 * 60 * 60 * 1000) {
+              return res.status(400).send('You can only submit one form every 24 hours.');
+            }
+          }
+          user.lastSubmission = new Date();
+            await user.save();
+            return res.status(200).json({success:true})
     }
     else{
         return res.status(400).json({success:false})
