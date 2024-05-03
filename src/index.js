@@ -239,10 +239,7 @@ const Product = mongoose.model("Product",{
         type:Boolean,
         default:true,
     },
-    stringimage:{
-        type:String,
-        required:true,
-    },
+    
     weight:{
         type:Number,
         required:true,
