@@ -242,7 +242,7 @@ const Product = mongoose.model("Product",{
     
     weight:{
         type:Number,
-        required:true,
+        required:false,
     }
 })
 
