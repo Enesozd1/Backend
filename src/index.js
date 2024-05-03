@@ -61,6 +61,18 @@ app.post("/upload", upload.single('product'),(req,res)=>{
 //Stripe endpoint
 
 app.post('/create-checkout-session', async (req, res) => {
+    const shippingFees = {
+        "USA": {
+          "3kg": 10,
+          "10kg": 20,
+        },
+        "Canada": {
+          "3kg": 15,
+          "10kg": 30,
+        },
+        // other countries...
+      };
+      
     const line_items = req.body.productWithQuantityArray.map(item =>{
         return{
             price_data: {
@@ -83,27 +95,27 @@ app.post('/create-checkout-session', async (req, res) => {
       "RO", "SK", "SI", "ES", "SE", "GB", "IS", "NO", "LI", "CH", "US", "CA"],
     },
     shipping_options: [
-      {
-        shipping_rate_data: {
-          type: "fixed_amount",
-          fixed_amount: {
-            amount: 0,
-            currency: "eur",
-          },
-          display_name: "Free shipping",
+      //{
+      //  shipping_rate_data: {
+      //    type: "fixed_amount",
+      //    fixed_amount: {
+      //      amount: 0,
+      //      currency: "eur",
+      //    },
+      //    display_name: "Free shipping",
           // Delivers between 5-7 business days
-          delivery_estimate: {
-            minimum: {
-              unit: "business_day",
-              value: 5,
-            },
-            maximum: {
-              unit: "business_day",
-              value: 7,
-            },
-          },
-        },
-      },
+      //    delivery_estimate: {
+      //      minimum: {
+      //        unit: "business_day",
+      //        value: 5,
+      //      },
+      //      maximum: {
+      //        unit: "business_day",
+       //       value: 7,
+       //     },
+       //   },
+       // },
+      //},
       {
         shipping_rate_data: {
           type: "fixed_amount",
@@ -340,6 +352,9 @@ app.post('/findcontact', async (req,res)=>{
     else{
         return res.status(400).json({success:false})
     }
+})
+app.post('/promocheck', async (req,res)=>{
+    
 })
 
 //Endpoint for user registration
