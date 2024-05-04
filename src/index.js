@@ -242,6 +242,10 @@ const Product = mongoose.model("Product",{
     stringimage:{
         type:String,
         required:true,
+    },
+    weight:{
+        type:Number,
+        required:false,
     }
     
 })
