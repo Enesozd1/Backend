@@ -164,8 +164,14 @@ app.post('/create-checkout-session', async (req, res) => {
         },
           
       };
-      
-      const fee = shippingFees[req.body.country][req.body.Totalweight];  // or "10kg", depending on the weight
+      let Weight = 0;
+      if(req.body.Totalweight <= 3){
+        Weight = 3;
+      }
+      else if(req.body.Totalweight > 3){
+        Weight = 10;
+      }
+      const fee = shippingFees[req.body.country][Weight];  // or "10kg", depending on the weight
       console.log(fee)
       
     const line_items = req.body.productWithQuantityArray.map(item =>{
