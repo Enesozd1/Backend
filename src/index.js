@@ -123,7 +123,7 @@ app.post('/create-checkout-session', async (req, res) => {
         shipping_rate_data: {
           type: "fixed_amount",
           fixed_amount: {
-            amount: 1500,
+            amount: fee * 100,
             currency: "eur",
           },
           display_name: "Next day air",
