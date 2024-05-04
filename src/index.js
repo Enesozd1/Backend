@@ -62,9 +62,9 @@ app.post("/upload", upload.single('product'),(req,res)=>{
 
 app.post('/create-checkout-session', async (req, res) => {
     const shippingFees = {
-        "USA": {
-          "3kg": 10,
-          "10kg": 20,
+        "Belgium": {
+          "3": 10,
+          "10": 12,
         },
         "Canada": {
           "3kg": 15,
@@ -72,6 +72,9 @@ app.post('/create-checkout-session', async (req, res) => {
         },
         // other countries...
       };
+      
+      const fee = shippingFees[req.body.country][req.body.Totalweight];  // or "10kg", depending on the weight
+      console.log(fee)
       
     const line_items = req.body.productWithQuantityArray.map(item =>{
         return{
@@ -239,15 +242,16 @@ const Product = mongoose.model("Product",{
         type:Boolean,
         default:true,
     },
+
     stringimage:{
         type:String,
         required:true,
     },
+
     weight:{
         type:Number,
         required:false,
-    }
-    
+    }    
 })
 
 
