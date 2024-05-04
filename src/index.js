@@ -66,11 +66,103 @@ app.post('/create-checkout-session', async (req, res) => {
           "3": 10,
           "10": 12,
         },
-        "Canada": {
-          "3kg": 15,
-          "10kg": 30,
+        "Denmark": {
+            "3": 10,
+            "10": 12,
         },
-        // other countries...
+        "Netherlands": {
+            "3": 10,
+            "10": 12,
+        },
+        "Croatia": {
+            "3": 10,
+            "10": 12,
+        },
+        "Luxembourg": {
+            "3": 10,
+            "10": 12,
+        },
+        "Slovenia": {
+            "3": 10,
+            "10": 12,
+        },
+        "Estonia": {
+            "3": 12,
+            "10": 14,
+        },
+        "Lithuania": {
+            "3": 12,
+            "10": 14,
+        },
+        "Latvia": {
+            "3": 12,
+            "10": 14,
+        },
+        "Romania": {
+            "3": 12,
+            "10": 14,
+        },
+        "France": {
+            "3": 12,
+            "10": 14,
+        },
+        "Italy": {
+            "3": 12,
+            "10": 14,
+        },
+        "Bulgaria": {
+            "3": 16,
+            "10": 18,
+        },
+        "Finland": {
+            "3": 16,
+            "10": 18,
+        },
+        "Ireland": {
+            "3": 16,
+            "10": 18,
+        },
+        "Germany": {
+            "3": 6,
+            "10": 8,
+        },
+        "Hungary": {
+            "3": 6,
+            "10": 8,
+        },
+        "Poland": {
+            "3": 6,
+            "10": 8,
+        },
+        "Portugal": {
+            "3": 16,
+            "10": 18,
+        },
+        "Greece": {
+            "3": 16,
+            "10": 18,
+        },
+        "Spain": {
+            "3": 16,
+            "10": 18,
+        },
+        "Sweden": {
+            "3": 16,
+            "10": 18,
+        },
+        "Austria": {
+            "3": 6,
+            "10": 18,
+        },
+        "Czechia": {
+            "3": 4,
+            "10": 4,
+        },
+        "Slovakia": {
+            "3": 6,
+            "10": 5.5,
+        },
+          
       };
       
       const fee = shippingFees[req.body.country][req.body.Totalweight];  // or "10kg", depending on the weight
@@ -93,9 +185,9 @@ app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
     shipping_address_collection: {
-      allowed_countries: ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE",
-      "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT",
-      "RO", "SK", "SI", "ES", "SE", "GB", "IS", "NO", "LI", "CH", "US", "CA"],
+      allowed_countries: ["AT", "BE", "BG", "HR", "CZ", "DK", "EE", "FI", "FR", "DE",
+      "GR", "HU", "IE", "IT", "LV", "LT", "LU", "NL", "PL",
+      "RO", "SK", "SI", "ES", "SE", "NO"],
     },
     shipping_options: [
       //{
