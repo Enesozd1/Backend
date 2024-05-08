@@ -343,7 +343,7 @@ const Product = mongoose.model("Product",{
 
     stringimage:{
         type:String,
-        required:true,
+        required:false,
     },
 
     weight:{
