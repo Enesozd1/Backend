@@ -155,7 +155,7 @@ app.post('/create-checkout-session', async (req, res) => {
             "10": 18,
         },
         "Czechia": {
-            "3": 4,
+            "3": 1,   //temp norm 4
             "10": 4,
         },
         "Slovakia": {
