@@ -20,7 +20,7 @@ const { error } = require("console");
 dotenv.config()
 
 app.use(cors({
-    origin: [process.env.origin1, process.env.origin2,process.env.origin3],  // it was '*' process.env.origin1, process.env.origin2,process.env.origin3
+    origin: ['*'],  // it was '*' process.env.origin1, process.env.origin2,process.env.origin3
 }));
 
 app.use(express.json());
