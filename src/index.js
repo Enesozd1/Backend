@@ -17,6 +17,7 @@ const bodyParser = require('body-parser');
 const Schema = mongoose.Schema
 const dotenv = require("dotenv");
 const { error } = require("console");
+const { type } = require("os");
 dotenv.config()
 
 app.use(cors({
@@ -316,6 +317,18 @@ const Product = mongoose.model("Product",{
         type:String,
         required:false,
     },
+    image2:{
+        type:String,
+        required:false,
+    },
+    image3:{
+        type:String,
+        required:false,
+    },
+    image4:{
+        type:String,
+        required:false,
+    },
     category:{
         type:String,
         required:true,
@@ -349,7 +362,8 @@ const Product = mongoose.model("Product",{
     weight:{
         type:Number,
         required:false,
-    }    
+    }
+
 })
 
 
