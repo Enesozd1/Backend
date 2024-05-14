@@ -398,6 +398,8 @@ app.post('/addproduct', async (req,res)=>{
         old_price:req.body.old_price,
         description:req.body.description,
         weight:req.body.weight,
+        make:req.body.make,
+        model:req.body.model,
     });
     console.log(product);
     await product.save();
