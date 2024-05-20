@@ -190,14 +190,7 @@ app.post('/create-checkout-session', async (req, res) => {
         }
     })
     const session = await stripe.checkout.sessions.create({
-        fields: {
-            billingDetails: {
-              address: {
-                country: 'never',
-                postalCode: 'never',
-              }
-            }
-          },
+        
         payment_method_types: ["card"],
     shipping_address_collection: {
       allowed_countries: ["AT", "BE", "BG", "HR", "CZ", "DK", "EE", "FI", "FR", "DE",
