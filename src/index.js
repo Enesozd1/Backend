@@ -190,6 +190,14 @@ app.post('/create-checkout-session', async (req, res) => {
         }
     })
     const session = await stripe.checkout.sessions.create({
+        fields: {
+            billingDetails: {
+              address: {
+                country: 'never',
+                postalCode: 'never',
+              }
+            }
+          },
         payment_method_types: ["card"],
     shipping_address_collection: {
       allowed_countries: ["AT", "BE", "BG", "HR", "CZ", "DK", "EE", "FI", "FR", "DE",
@@ -197,27 +205,7 @@ app.post('/create-checkout-session', async (req, res) => {
       "RO", "SK", "SI", "ES", "SE", "NO"],
     },
     shipping_options: [
-      //{
-      //  shipping_rate_data: {
-      //    type: "fixed_amount",
-      //    fixed_amount: {
-      //      amount: 0,
-      //      currency: "eur",
-      //    },
-      //    display_name: "Free shipping",
-          // Delivers between 5-7 business days
-      //    delivery_estimate: {
-      //      minimum: {
-      //        unit: "business_day",
-      //        value: 5,
-      //      },
-      //      maximum: {
-      //        unit: "business_day",
-       //       value: 7,
-       //     },
-       //   },
-       // },
-      //},
+      
       {
         shipping_rate_data: {
           type: "fixed_amount",
