@@ -171,7 +171,7 @@ app.post('/create-checkout-session', async (req, res) => {
         Weight = 10;
       }
       const fee = shippingFees[req.body.country][Weight];  // or "10kg", depending on the weight
-      console.log(fee)
+      
       
     const line_items = req.body.productWithQuantityArray.map(item =>{
         return{
@@ -257,8 +257,7 @@ app.post('/log-value', (req, res) => {
         res.status(200).send("Email sent successfully");
      });
    
-    console.log('Received value:', req.body.to);
-    //res.status(200).json({ message: 'Value logged successfully'  });
+    
   });
 
   app.post('/usercontact', (req, res) => {
@@ -277,7 +276,7 @@ app.post('/log-value', (req, res) => {
         //res.status(200).send("Email");
      });
    
-    console.log('Received value:', req.body.to);
+    
     //res.status(200).json({ message: 'Value logged successfully'  });
   });
 
@@ -380,9 +379,9 @@ app.post('/addproduct', async (req,res)=>{
         make:req.body.make,
         model:req.body.model,
     });
-    console.log(product);
+    
     await product.save();
-    console.log("Saved");
+    
     res.json({
         success:true,
         name:req.body.name,
@@ -393,7 +392,7 @@ app.post('/addproduct', async (req,res)=>{
 
 app.post('/removeproduct', async (req,res) =>{
     await Product.findOneAndDelete({id:req.body.id});
-    console.log("Removed");
+    
     res.json({
         success:true,
         name:req.body.name,
@@ -403,7 +402,7 @@ app.post('/removeproduct', async (req,res) =>{
 //Create api for getting all products
 app.get('/allproducts', async (req,res) =>{
     let products = await Product.find({});
-    console.log("All products Fetched");
+    
     res.send(products);
 })
 
@@ -539,7 +538,7 @@ app.post('/login',async (req,res)=>{
 app.get('/newcollections',async (req,res) => {
     let products = await Product.find({});
     let newcollection = products.slice(1).slice(-8);
-    console.log("newcollection fetched");
+    
     res.send(newcollection);
 })
 
@@ -567,7 +566,7 @@ const fetchUser = async (req,res,next) => {
 
 //endpoint for cartdata
 app.post('/addtocart',fetchUser, async (req,res) =>{
-    console.log("added", req.body.itemId);
+    
     let userData = await Users.findOne({_id:req.user.id});
     userData.cartData[req.body.itemId] += 1;
     await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData});
@@ -576,7 +575,7 @@ app.post('/addtocart',fetchUser, async (req,res) =>{
 
 //endpoint for remove cartdata
 app.post('/removefromcart',fetchUser, async (req,res)=>{
-    console.log("removed", req.body.itemId);
+    
     let userData = await Users.findOne({_id:req.user.id});
     if(userData.cartData[req.body.itemId]>0)
     userData.cartData[req.body.itemId] -= 1;
@@ -592,11 +591,11 @@ app.post('/getcart',fetchUser,async (req,res) =>{
 
 app.listen(port,(error)=>{
     if(!error){
-        console.log("Server Runnng on Port" + port)
+        
         
     }
     else{
-        console.log("Error: " +error)
+        
     }
 
 })
