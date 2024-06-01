@@ -1,5 +1,3 @@
-//import env from "../env";
-//const sendemail = require("../sendEmail/sendEmail")
 const nodemailer = require("nodemailer");
 const port = 4000;
 const express = require("express");
@@ -21,7 +19,7 @@ const { type } = require("os");
 dotenv.config()
 
 app.use(cors({
-    origin: [process.env.origin1, process.env.origin2,process.env.origin3],  // it was '*' process.env.origin1, process.env.origin2,process.env.origin3
+    origin: [process.env.origin1, process.env.origin2,process.env.origin3],  
 }));
 
 app.use(express.json());
@@ -156,7 +154,7 @@ app.post('/create-checkout-session', async (req, res) => {
             "10": 18,
         },
         "Czechia": {
-            "3": 1,   //temp norm 4
+            "3": 4,   
             "10": 4,
         },
         "Slovakia": {
@@ -235,7 +233,7 @@ app.post('/create-checkout-session', async (req, res) => {
 
 const transporter = nodemailer.createTransport({
     service: process.env.SERVICE,
-    host:"smtp.gmail.com",
+    host:process.env.EMAIL_HOST,
     port:process.env.EMAIL_PORT,
     secure:false, 
     auth: {
@@ -592,11 +590,6 @@ app.post('/getcart',fetchUser,async (req,res) =>{
     res.json(userData.cartData);
 })
 
-
-
-
-
-
 app.listen(port,(error)=>{
     if(!error){
         console.log("Server Runnng on Port" + port)
@@ -608,9 +601,3 @@ app.listen(port,(error)=>{
 
 })
 
-//endpoint for brevo
-
-
-
-
-//http://localhost:${port}/images/${req.file.filename}
